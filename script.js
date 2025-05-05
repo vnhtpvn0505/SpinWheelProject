@@ -76,6 +76,36 @@ const prizes = [
     ctx.restore();
   }
   
+  function showCongratulation(prize) {
+    let message;
+    if (prize === "Pin") {
+      message = `🎉 Chúc bạn có một buổi Offline vui vẻ! 🎉`;
+    } else {
+      message = `🎉 Chúc mừng bạn đã đạt giải: ${prize}! 🎉`;
+    }
+    const msg = document.createElement('div');
+    msg.textContent = message;
+    msg.style.position = 'fixed';
+    msg.style.top = '10%';
+    msg.style.left = '50%';
+    msg.style.transform = 'translate(-50%, -50%)';
+    msg.style.background = '#fff';
+    msg.style.color = '#0b5c3b';
+    msg.style.padding = '32px 24px';
+    msg.style.borderRadius = '16px';
+    msg.style.boxShadow = '0 8px 32px rgba(0,0,0,0.18)';
+    msg.style.fontSize = '1.5rem';
+    msg.style.fontWeight = 'bold';
+    msg.style.zIndex = 9999;
+    msg.style.textAlign = 'center';
+    msg.style.cursor = 'pointer';
+    msg.onclick = () => document.body.removeChild(msg);
+    document.body.appendChild(msg);
+    setTimeout(() => {
+      if (document.body.contains(msg)) document.body.removeChild(msg);
+    }, 3500);
+  }
+
   spinBtn.onclick = function() {
     if (spinning) return;
     spinning = true;
@@ -92,7 +122,14 @@ const prizes = [
         requestAnimationFrame(animate);
       } else {
         spinning = false;
-        // Có thể hiện thông báo phần thưởng ở đây
+        // Xác định phần thưởng trúng (chuẩn hóa lại phép tính)
+        const num = prizes.length;
+        const arc = 2 * Math.PI / num;
+        let finalAngle = (angle % (2 * Math.PI));
+        // Góc 0 là hướng lên trên, cần đảo chiều để đúng với mũi tên
+        let normalized = (1.5 * Math.PI - finalAngle + 2 * Math.PI) % (2 * Math.PI);
+        let index = Math.floor(normalized / arc) % num;
+        showCongratulation(prizes[index]);
       }
     }
     requestAnimationFrame(animate);

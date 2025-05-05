@@ -19,7 +19,7 @@ body {
   }
   
   .logo-config {
-    height: 60px;
+    height: 100px;
     margin-bottom: 10px;
   }
   
@@ -44,14 +44,14 @@ body {
   }
   
   .logo-hcmc {
-    height: 100px;
+    height: 150px;
   }
   
   /* --- Desktop --- */
   .wheel-container {
     position: relative;
-    width: 550px;
-    height: 550px;
+    width: 500px;
+    height: 500px;
     margin: 30px auto 0 auto;
     display: flex;
     justify-content: center;
